@@ -4,7 +4,7 @@
  * This program is licensed under the GNU GPL, full terms in the LICENSE file
  */
 
-function select_general($control_name,$table,$where="(1=1)",$order = "id" ,$match_field = "id" ,$match_value, $show_field = "id", $size = 1, $add_data = NULL, $onchange = "") {
+function select_general($control_name, $table, $match_value, $where="(0=1)",$order = "id" ,$match_field = "id" , $show_field = "id", $size = 0, $add_data = NULL, $onchange = "") {
     $query = "Select $match_field as match_aux, $show_field as show_aux from $table where (1=1) and $where order by $order";
     //debug ($query);
     $result_aux = db_query ($query) or die ("Query failed - select_general($table) - ".db_error());
@@ -22,7 +22,7 @@ function select_general($control_name,$table,$where="(1=1)",$order = "id" ,$matc
     return select_custom($control_name, $select_data, $match_value,$onchange,$size);
 }
 
-function select_object (&$Object, $control_name, $selected_values, $add_data = NULL, $match_field, $show_fields, $params=array(), $size = 1, $onchange = '', $ondblclick = '',$option_size = NULL)
+function select_object (&$Object, $control_name, $selected_values, $match_field, $show_fields, $add_data = NULL, $params=array(), $size = 1, $onchange = '', $ondblclick = '',$option_size = NULL)
 {
   $obj_data = call_user_func_array(array($Object,'get_all'),$params);
   if (is_array($add_data))
@@ -54,163 +54,163 @@ function select_object (&$Object, $control_name, $selected_values, $add_data = N
 
 function select_interfaces ($name,$interface_id,$size = 1,$add_data = NULL, $onchange = "", $params = array()) {
   $Interfaces = new JffnmsInterfaces();
-  return select_object($Interfaces,$name,$interface_id,$add_data,'id',array('client_shortname','interface','description'),$params, $size,$onchange);
+  return select_object($Interfaces,$name,$interface_id,'id',array('client_shortname','interface','description'),$add_data,params, $size,$onchange);
 } 
 
 function select_interfaces_host ($name,$interface_id,$size = 1,$add_data = NULL, $onchange = "", $params = array())
 {
   $Interfaces = new JffnmsInterfaces();
-  return select_object($Interfaces,$name,$interface_id,$add_data,"id",array("host_name","zone_shortname","interface","description"),$params,$size,$onchange);
+  return select_object($Interfaces,$name,$interface_id,"id",array("host_name","zone_shortname","interface","description"),$add_data,params,$size,$onchange);
 } 
 
 function select_maps ($name, $map_id,$size = 1, $add_data = NULL, $onchange = "", $params = array()) //FIXME option to hide RootMap
 {
   $Maps = new JffnmsMaps();
-  return select_object($Maps,$name,$map_id,$add_data,'id','name',$params,$size,$onchange);
+  return select_object($Maps,$name,$map_id,'id','name',$add_data,params,$size,$onchange);
 } 
 
 function select_hosts ($name,$host_id,$size = 1, $add_data = NULL, $onchange = "", $char_size = 50)
 {
   $Hosts = new JffnmsHosts();
-  return select_object($Hosts,$name,$host_id,$add_data,"id",array("name","zone_description"),array(NULL,NULL,array('show_host=1')),$size,$onchange,"",$char_size);
+  return select_object($Hosts,$name,$host_id,"id",array("name","zone_description"),$add_data, array(NULL,NULL,array('show_host=1')),size,$onchange,"",$char_size);
 }
 
 function select_hosts_filtered ($name,$host_id,$size = 1, $add_data = NULL, $onchange = "", $filters = array())
 {
   $Hosts = new JffnmsHosts();
-  return select_object($Hosts,$name,$host_id,$add_data,'id',array('name','zone_description'),array(NULL,$filters), $size,$onchange,'',50);
+  return select_object($Hosts,$name,$host_id,'id',array('name','zone_description'),$add_data, array(NULL,$filters), $size,$onchange,'',50);
 }
 
 function select_clients ($name, $client_id, $size = 1, $add_data = NULL, $onchange = "", $params = array())
 {
   $Clients = new JffnmsClients();
-  return select_object($Clients,$name,$client_id,$add_data,'id','name',$params,$size,$onchange);
+  return select_object($Clients,$name,$client_id,'id','name',$add_data,params,$size,$onchange);
 }
 
 function select_journal ($name, $journal_id, $size=1, $add_data = NULL, $onchange = "", $params = array())
 {
   $Journals = new JffnmsJournals();
-  return select_object($Journals,$name,$journal_id,$add_data,'id','subject',$params,$size,$onchange);
+  return select_object($Journals,$name,$journal_id,'id','subject',$add_data,arams,$size,$onchange);
 }
 
 function select_interface_types ($name,$type_id,$size = 1, $add_data = NULL,$onchange = "", $params = array())
 {
   $Interface_types = new JffnmsInterface_types();
-  return select_object($Interface_types,$name,$type_id,$add_data,"id","description",$params,$size,$onchange);
+  return select_object($Interface_types,$name,$type_id,"id","description",$add_data,$params,$size,$onchange);
 }
 
 function select_triggers ($name,$trigger_id,$add_data = NULL,$onchange = "", $params = array())
 {
   $Triggers = new JffnmsTriggers();
-  return select_object($Triggers,$name,$trigger_id,$add_data,'id','description',$params,1,$onchange);
+  return select_object($Triggers,$name,$trigger_id,'id','description',$add_data,$params,1,$onchange);
 }
 
 function select_users ($name,$user_id,$add_data = NULL,$onchange = "", $params = array()) {
   $Users = new JffnmsUsers();
-    return select_object($Users,$name,$user_id,$add_data,"id","fullname",$params,1,$onchange);
+    return select_object($Users,$name,$user_id,"id","fullname",$add_data,$params,1,$onchange);
 } 
 
 function select_actions ($name,$id,$add_data = NULL,$onchange = "", $params = array()) {
   $Actions = new JffnmsActions();
-    return select_object($Actions,$name,$id,$add_data,'id','description',$params,1,$onchange);
+    return select_object($Actions,$name,$id,'id','description',$add_data,$params,1,$onchange);
 } 
 
 function select_event_types ($name,$id,$size = 1,$add_data = NULL, $onchange = "", $params = array())
 {
   $EventTypes = new JffnmsEvent_types();
-    return select_object($EventTypes,$name,$id,$add_data,"id",array("description"),$params,$size,$onchange);
+    return select_object($EventTypes,$name,$id,"id",array("description"),$add_data,$params,$size,$onchange);
 } 
 
 function select_event_types_alarms ($name,$id,$size = 1,$add_data = NULL, $onchange = "") {
   $EventTypes = new JffnmsEvent_types();
-    return select_object($EventTypes,$name,$id,$add_data,'id',array('description'),array(NULL,array('generate_alarm=>1')),$size,$onchange);
+    return select_object($EventTypes,$name,$id,'id',array('description'),$add_data,array(NULL,array('generate_alarm=>1')),$size,$onchange);
 } 
 
 function select_zones ($name,$id,$add_data = NULL,$onchange = "", $params = array()) {
   $Zones = new JffnmsZones();
-  return select_object($Zones,$name,$id,$add_data,'id','zone',$params,1,$onchange);
+  return select_object($Zones,$name,$id,'id','zone',$add_data,$params,1,$onchange);
 } 
 
 function select_severity ($name,$id,$add_data = NULL,$onchange = '', $params = array())
 {
   $Severity = new JffnmsSeverity();
-  return select_object($Severity,$name,$id,$add_data,'id',array('level','severity'),$params,1,$onchange);
+  return select_object($Severity,$name,$id,'id',array('level','severity'),$add_data,params,1,$onchange);
 } 
 
 function select_severity_level ($name,$id, $size, $add_data = NULL,$onchange = "", $params = array()) {
   global $Severity;
-  return select_object($Severity,$name,$id,$add_data,"level",array("level","severity"),$params,$size,$onchange);
+  return select_object($Severity,$name,$id,"level",array("level","severity"),$add_data,params,$size,$onchange);
 } 
 
 function select_profiles_options ($name,$id,$add_data = NULL,$onchange = "", $params = array())
 {
   $ProfilesOptions = new JffnmsProfiles_options();
-  return select_object($ProfilesOptions,$name,$id,$add_data,'id','description',$params,1,$onchange);
+  return select_object($ProfilesOptions,$name,$id,'id','description',$add_data,$params,1,$onchange);
 } 
 
 function select_hosts_config_types ($name,$id, $add_data = NULL, $onchange = "", $params = array())
 {
   $CTypes = new JffnmsHosts_config_types();
-  return select_object($CTypes,$name,$id,$add_data,"id","description",$params,1,$onchange);
+  return select_object($CTypes,$name,$id,"id","description",$add_data,$params,1,$onchange);
 } 
 
 function select_graph_types ($name, $id, $add_data = NULL, $onchange = "", $params = array())
 {
   $GraphTypes = new JffnmsGraph_types();
-  return select_object($GraphTypes,$name,$id,$add_data,"id",array("types_description","description"),$params,1,$onchange);
+  return select_object($GraphTypes,$name,$id,"id",array("types_description","description"),$add_data,params,1,$onchange);
 } 
 
 function select_alarm_states ($name,$id, $add_data = NULL, $onchange = "", $params = array())
 {
   $States = new JffnmsAlarm_states;
-    return select_object($States,$name,$id,$add_data,"id","description",$params,1,$onchange);
+    return select_object($States,$name,$id,"id","description",$add_data, params,1,$onchange);
 } 
 
 function select_pollers ($name,$id, $add_data = NULL, $onchange = "", $params = array())
 {
   $Pollers = new JffnmsPollers();
-  return select_object($Pollers,$name,$id,$add_data,'id','description',$params,1,$onchange);
+  return select_object($Pollers,$name,$id,'id','description',$add_data,params,1,$onchange);
 } 
 
 function select_pollers_backend ($name,$id, $add_data = NULL, $onchange = "", $params = array())
 {
   $Backends = new JffnmsPollers_backend;
-  return select_object($Backends,$name,$id,$add_data,'id','description',$params,1,$onchange);
+  return select_object($Backends,$name,$id,'id','description',$add_data,$params,1,$onchange);
 } 
 
 function select_autodiscovery ($name,$id, $add_data = NULL, $onchange = "", $params = array())
 {
   $ADS = new JffnmsAutodiscovery();
-  return select_object($ADS,$name,$id,$add_data,'id','description',$params,1,$onchange);
+  return select_object($ADS,$name,$id,'id','description',$add_data,$params,1,$onchange);
 } 
 
 function select_filters ($name,$id, $add_data = NULL, $onchange = '', $params = array())
 {
   $Filters = new JffnmsFilters();
-  return select_object($Filters,$name,$id,$add_data,'id','description',$params,1,$onchange);
+  return select_object($Filters,$name,$id,'id','description',$add_data,$params,1,$onchange);
 } 
 
 function select_filters_fields ($name,$id, $add_data = NULL, $onchange = "", $params = array())
 {
   $FFields = new JffnmsFilters_fields();
-  return select_object($FFields,$name,$id,$add_data,'id','description',$params,1,$onchange);
+  return select_object($FFields,$name,$id,'id','description',$add_data,params,1,$onchange);
 } 
 
 function select_slas_cond ($name,$id, $add_data = NULL, $onchange = "", $params = array())
 {
   $SLAs_cond = new JffnmsSlas_cond();
-  return select_object($SLAs_cond,$name,$id,$add_data,'id','description',$params,1,$onchange);
+  return select_object($SLAs_cond,$name,$id,'id','description',$add_data,$params,1,$onchange);
 } 
 
 function select_profiles_values ($name,$option_id, $value_id) {
   $ProfilesValues = new JffnmsProfiles_values();
-    return select_object($ProfilesValues,$name,$value_id,NULL,'value','description',array(NULL,array('option'=>$option_id)),1,'');
+    return select_object($ProfilesValues,$name,$value_id,'value','description',NULL,array(NULL,array('option'=>$option_id)),1,'');
 }
 
 function select_interface_types_field_types ($name,$id,$add_data = NULL,$onchange = "", $params = array()) {
     if ($id==1) $id = 8;
     $Obj = new JffnmsInterface_types_field_types();
-    return select_object($Obj,$name,$id,$add_data,"id","description",array(NULL,1),1,$onchange);
+    return select_object($Obj,$name,$id,"id","description",$add_data,array(NULL,1),1,$onchange);
 } 
 
 // FIXME CONVERT TO select_object
@@ -586,7 +586,7 @@ function select_poll_interval ($name,$value,$text = 0)
     }
 
     function select_logfiles_match_items ($name,$id, $add_data = NULL, $onchange = "", $params = array()) {
-    return select_object($logfiles_match_items,$name,$id,$add_data,"id","description",$params,1,$onchange);
+    return select_object($logfiles_match_items,$name,$id,"id","description",$add_data,params,1,$onchange);
 } 
 
 function action_dropdown ($name, $id, $actions, $selected_action = '')
@@ -845,6 +845,6 @@ function snmp_options ($name, $value = '', $text = false)
 
 function select_logfiles ($name,$interface_id,$size = 1,$add_data = NULL, $onchange = "", $params = array()) {
   $Logfiles = new JffnmsLogfiles();
-  return select_object($Logfiles,$name,$interface_id,$add_data,'id',array('description'),$params, $size,$onchange);
+  return select_object($Logfiles,$name,$interface_id,'id',array('description'),$add_data,params, $size,$onchange);
 } 
 ?>

@@ -96,7 +96,7 @@
 		    td(textbox("referer_start",$r["referer_start"],5)." / ".textbox("referer_stop",$r["referer_stop"],5), "field");
 	    else
 		echo 
-		    adm_standard_edit_delete($r["id"],'', FALSE).
+		    adm_standard_edit_delete('', $r["id"], FALSE).
 		    td($r["id"],"field","field_id").
 	    	    td($r["date_start"],"field").
 	    	    td($r["date_stop"],"field").

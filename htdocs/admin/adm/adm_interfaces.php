@@ -441,7 +441,7 @@ function get_interface_field($field_name, $ids, $cant, $value, $values, $data, $
   case 'action' :
     if ($cant != 0)
     {
-      echo adm_standard_edit_delete($values['id'],$filter, false);
+      echo adm_standard_edit_delete($filter, $values['id'], false);
       return FALSE;
     }
     return adm_form_submit().br().

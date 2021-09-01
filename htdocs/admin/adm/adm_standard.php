@@ -356,13 +356,13 @@ if ($cant > 0)
             $view_name = $st['split_view'];
           else
             $view_name = '';
-          echo adm_standard_edit_delete($record['id'],$filter, $view_name);
+          echo adm_standard_edit_delete($filter, $record['id'], $view_name);
           break;
         case 3:
           echo td (action_dropdown('action_host', $record['id'], $st['actions'], $action), 'action');
           break;
         default:
-          echo adm_standard_edit_delete($record['id'],$filter, FALSE);
+          echo adm_standard_edit_delete($filter ,$record['id'], FALSE);
           break;
         }
       }

@@ -99,7 +99,7 @@ include ('../../auth.php');
     } else 
       if (($rec['show_in_profile']==1) || ($admin))
         echo 
-          adm_standard_edit_delete($rec['id'],$filter, false).
+          adm_standard_edit_delete($filter, $rec['id'], false).
             td ($rec['description'], 'field').
             td (
               (($rec['type']=='select')?$rec['values_description']:'').

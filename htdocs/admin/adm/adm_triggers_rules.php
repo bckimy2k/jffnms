@@ -111,7 +111,7 @@
 		      form_close();
     } else
 	      echo
-  	    adm_standard_edit_delete($rec["id"],$filter, false).
+  	    adm_standard_edit_delete($filter, $rec["id"], false).
 		      td($rec["id"],"field", "field_id").
 	    	  td($rec["pos"],"field").
 		     ((($rec["field"]!="none") && ($rec["field"]!="any"))

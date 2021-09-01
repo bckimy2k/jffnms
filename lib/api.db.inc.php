@@ -150,9 +150,13 @@ function db_open()
   switch ($db_type)
   {
   case 'mysql':
-    if (($dbconn = @mysql_connect ($dbhost, $dbuser, $dbpass))===FALSE)
+    echo 'hostname=' . $dbhost . ',dbuser=' . $dbuser . ',dbpass=' . $dbpass;
+    // $dsn = "mysql:host=$dbhost;dbname=$db;charset=UTF8";
+    //echo 'hello' . 'hostname=' . $dbhost . 'dbuser=' . $dbuser . ',dbpass=' . $dbpass;
+    if (($dbconn = @mysqli_connect ($dbhost, $dbuser, $dbpass))===FALSE)
+    // if (($dbconn = new PDO($dsn, $dbuser, $dbpass)) === FALSE)
       die('Unable to connect to mysql database: '.mysql_error());
-    if (mysql_select_db($db)===FALSE)
+    if (mysqli_select_db($dbconn, $db)===FALSE)
       die('Could not select mysql database - CON2 '.mysql_error($dbconn));
     break;
       
@@ -184,10 +188,14 @@ function db_test() {
 
     switch ($db_type) {
     case 'mysql':
-        if (extension_loaded('mysql')) {
-            $result = mysql_connect($dbhost, $dbuser, $dbpass);
-            if (mysql_select_db($db)===FALSE)
+        if (extension_loaded('mysqli')) {
+            $result = mysqli_connect($dbhost, $dbuser, $dbpass);
+            //$dsn = "mysql:host=$dbhost;dbname=$db;charset=UTF8";
+            // $result =  new PDO($dsn, $dbuser, $dbpass);
+            if (mysqli_select_db($result, $db)===FALSE)
+             {
                 unset($result);
+             }
         }
         break;
 

@@ -96,7 +96,7 @@ echo
     } else {
       $ProfilesValues = new JffnmsProfiles_values();
         echo 
-          adm_standard_edit_delete($rec['id'],'', 'Values').
+          adm_standard_edit_delete('', $rec['id'], 'Values').
           td($rec['id'],'field','field_id').
           td($rec['description'],'field').
           td($rec['tag'],'field').

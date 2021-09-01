@@ -503,7 +503,7 @@ function array_fetch(&$arr, $key, $default)
 
 /*
  */
-function __autoload($class_name)
+spl_autoload_register(function ($class_name)
 {
   global $Config;
 
@@ -515,7 +515,7 @@ function __autoload($class_name)
   if (!is_readable($class_filename))
     die ("Class file '$class_filename' is not readable.\n");
   require($class_filename);
-}  //__autoload()
+});  //__autoload()
 
 function jffnms_load_api($api_names)
 {

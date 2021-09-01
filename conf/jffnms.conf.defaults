@@ -23,7 +23,7 @@ dbuser:default = jffnms
 dbuser:size = 15 
 
 dbpass:description = Database Password
-dbpass:default = jffnms
+dbpass:default = tps123!@#
 dbpass:size = 15 
 
 db_working:description = Is The Database Working?

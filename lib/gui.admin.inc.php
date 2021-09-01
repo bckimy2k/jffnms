@@ -102,7 +102,7 @@ function adm_table_header($title, $init, &$span, $cols, $total_items = -1, $id =
 	    tag_close("thead");
 }
 
-function adm_standard_edit_delete($id = NULL, $filter, $view_name = '')
+function adm_standard_edit_delete($filter, $id = NULL, $view_name = '')
 {
   global $Sanitizer;
 
