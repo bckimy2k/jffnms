@@ -1,0 +1,32 @@
+#Paths
+JFFNMS=/opt/jffnms/engine
+PHP=/usr/bin/php
+
+# Consolidator 
+*/1  * * * *    cd $JFFNMS && $PHP -q consolidate.php >/dev/null 2>&1
+
+# SLAs
+*/30 * * * *    cd $JFFNMS && $PHP -q rrd_analizer.php >/dev/null 2>&1
+
+# TFTP Configuration
+02   4 * * *    cd $JFFNMS && $PHP -q tftp_get_host_config.php >/dev/null 2>&1
+
+# Cleanup system
+02   5 * * *    cd $JFFNMS && $PHP -q cleanup_raw_tables.php >/dev/null 2>&1
+20   * * * *    cd $JFFNMS && sh tmpwatch.sh $JFFNMS >/dev/null 2>&1
+
+
+
+# *** Pollers
+# Only uncomment one of the following. The -o flag will make it run only
+# once then exit. It is better to use the first one
+*/5  * * * *    cd $JFFNMS && $PHP -q poller.php >/dev/null 2>&1
+# run 20 children
+#*/5  * * * *    cd $JFFNMS && $PHP -q poller.php -c 0,20 >/dev/null 2>&1
+#*/5  * * * *    cd $JFFNMS && $PHP -q poller.php -o >/dev/null 2>&1
+
+# Interface Autodiscovery
+*/30 * * * *    cd $JFFNMS && $PHP -q autodiscovery_interfaces.php > /dev/null 2>&1
+
+# Network Autodiscovery
+#*/30 * * * *    cd $JFFNMS && $PHP -q autodiscovery_network.php master $THREADS > /dev/null 2>&1

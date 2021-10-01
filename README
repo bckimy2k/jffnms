@@ -1,0 +1,25 @@
+README file for JFFNMS
+======================
+
+This file contains important information about JFFNMS and should be read
+before installing or upgrading JFFNMS.
+
+Upgrading from 0.8.4
+--------------------
+JFFNMS version 0.8.4 shipped with a serious bug with the database extraction.
+The part of the build process that makes the databases differences was 
+missing, however the database dump worked ok.
+
+This gives us two scenarios:
+  * You had a pre 0.8.4 (eg 0.8.3) JFFNMS and upgraded, giving you an
+    unchanged 0.8.3 database.
+  * You (re)installed jffnms 0.8.4 and used the database dump. You got the 
+    correct database.
+
+The schema for 0.8.4 and 0.8.5 are the same.
+
+This means if you are the first pre-0.8.4 scenario you WILL need to run the SQL update scripts to update your schema, just like you normally should do.
+
+If JFFNMS 0.8.4 was your first database install, your schema is already 
+current, do NOT update the database (it will error out anyhow).
+
