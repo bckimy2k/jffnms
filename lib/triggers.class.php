@@ -121,7 +121,7 @@ class JffnmsTriggers extends basic
           break;
         default:
             #logger("Unknown trigger rule field type '$rule[field]', skipping.\n");
-            continue;
+            continue 2;
         } //switch
 
         if ($rule_field != 'none' && $rule_field != 'any')

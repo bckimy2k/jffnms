@@ -153,11 +153,8 @@ function db_open()
     echo 'hostname=' . $dbhost . ',dbuser=' . $dbuser . ',dbpass=' . $dbpass;
     // $dsn = "mysql:host=$dbhost;dbname=$db;charset=UTF8";
     //echo 'hello' . 'hostname=' . $dbhost . 'dbuser=' . $dbuser . ',dbpass=' . $dbpass;
-    if (($dbconn = @mysqli_connect ($dbhost, $dbuser, $dbpass))===FALSE)
-    // if (($dbconn = new PDO($dsn, $dbuser, $dbpass)) === FALSE)
-      die('Unable to connect to mysql database: '.mysql_error());
-    if (mysqli_select_db($dbconn, $db)===FALSE)
-      die('Could not select mysql database - CON2 '.mysql_error($dbconn));
+    if (($dbconn = @mysqli_connect ($dbhost, $dbuser, $dbpass, $db))===FALSE)
+      die('Unable to connect to mysql database: '.mysqli_error());
     break;
       
   case 'pg':
@@ -167,13 +164,24 @@ function db_open()
   default:
     die("Unknown database type '$db_type'");
   }
+   
+  /* $dbconn is good 
 
-  if (is_resource($dbconn)) { 
+ if( $result = mysqli_query($dbconn, "SELECT * from actions"))
+ {
+  echo "Returned rows are : " . mysqli_num_rows($result);
+  while ($row = mysqli_fetch_row($result)) {
+     echo("<p> descript = " . $row[1] . "</.p>");
+  }
+  // free result set
+  mysqli_free_result($result);
+ }
+ */
+
+  //if (is_resource($dbconn)) { 
     $db_conn = array();
     $db_conn['handle']=$dbconn;
     $db_conn['type']=$db_type;
-  } else 
-    $db_conn = NULL;
   return $db_conn;
 }
 
@@ -226,7 +234,7 @@ function db_close ($db_conn = NULL) {
     
     if (is_resource($db_conn["handle"])) { 
   switch ($db_conn["type"]) {
-      case 'mysql':  $result = mysql_close($db_conn["handle"]);
+      case 'mysql':  $result = mysqli_close($db_conn["handle"]);
         break;
         
       case 'pg':    $result = pg_close($db_conn["handle"]);
@@ -241,10 +249,10 @@ function db_close ($db_conn = NULL) {
 
     //Do the Real DB Query, but without reconnection logic
     function db_query_simple ($db_conn,$query) {
-
+  debug($db_conn);
   switch ($db_conn["type"]) {
       case "mysql":  
-      $result = @mysql_query ($query,$db_conn["handle"]);
+      $result = @mysqli_query ($db_conn["handle"],$query);
       
       break;
   
@@ -300,7 +308,7 @@ function db_fetch_array ($rs) {
 
     $db_conn = db_get_handle();
     switch ($db_conn['type']) {
-  case 'mysql':  $result = mysql_fetch_array ($rs,MYSQL_ASSOC);
+  case 'mysql':  $result = mysqli_fetch_array ($rs,MYSQLI_ASSOC);
       break;
   case 'pg':   $result = pg_fetch_array($rs,NULL,PGSQL_ASSOC);
       break;
@@ -313,7 +321,7 @@ function db_error ($db_conn = NULL) {
     if (!isset($db_conn)) $db_conn = db_get_handle(0);
 
     switch ($db_conn['type']) {
-  case 'mysql':  $result = mysql_error($db_conn['handle']);
+  case 'mysql':  $result = mysqli_error($db_conn['handle']);
       break;
 
   case 'pg':  $result = pg_errormessage($db_conn['handle']);
@@ -327,7 +335,7 @@ function db_num_rows ($rs) {
     $db_conn = db_get_handle();
 
     switch ($db_conn['type']) {
-  case 'mysql':  $result = mysql_num_rows($rs);
+  case 'mysql':  $result = mysqli_num_rows($rs);
       break;
 
   case 'pg':  $result = pg_numrows($rs);
@@ -341,7 +349,7 @@ function db_free($rs) {
   $db_conn = db_get_handle();
 
   switch ($db_conn["type"]) {
-    case "mysql":   $result = mysql_free_result ($rs);
+    case "mysql":   $result = mysqli_free_result ($rs);
         break;
     case "pg":      $result = pg_free_result($rs);
         break;
@@ -354,7 +362,7 @@ function db_insert_id ($db_conn = NULL) {
     if (!$db_conn) $db_conn = db_get_handle();
 
     switch ($db_conn['type']) {
-  case 'mysql':  $result = mysql_insert_id($db_conn['handle']);
+  case 'mysql':  $result = mysqli_insert_id($db_conn['handle']);
       break;
 
   case 'pg':  
@@ -370,7 +378,7 @@ function db_affected_rows ($db_conn = NULL) {
     if (!$db_conn) $db_conn = db_get_handle();
 
     switch ($db_conn['type']) {
-  case 'mysql':  $result = mysql_affected_rows($db_conn['handle']);
+  case 'mysql':  $result = mysqli_affected_rows($db_conn['handle']);
       break;
 
   case 'pg':  $result = pg_affected_rows($db_conn['handle']);
@@ -387,8 +395,7 @@ function db_copy_table ($from,$to,$cant = NULL) {
 
     switch ($db_conn['type']) {
   case 'mysql':   $query="TRUNCATE TABLE $to";
-      $result = db_query($query) or die("db_copy_table($from,$to,$cant) Error :".mysql_error());
-      
+      $result = db_query($query) or die("db_copy_table($from,$to,$cant) Error :".mysqli_error());
       $query="REPLACE INTO $to SELECT * FROM $from order by id desc $limit;";
       $result = db_query($query);
       break;
@@ -410,13 +417,13 @@ function db_copy_table ($from,$to,$cant = NULL) {
   switch ($db_conn['type']) {
       case 'mysql':   
       $query="REPAIR TABLE $table";
-      $result1 = db_query($query) or die("repair($table) Error :".mysql_error());
+      $result1 = db_query($query) or die("repair($table) Error :".mysqli_error());
       
       $query="OPTIMIZE TABLE $table";
-      $result2 = db_query($query) or die("optimize($table) Error :".mysql_error());
+      $result2 = db_query($query) or die("optimize($table) Error :".mysqli_error());
       
       $query="ALTER TABLE ".$table." AUTO_INCREMENT = 1;";
-      $result3 = db_query($query) or die("auto_increment($table) Error :".mysql_error());
+      $result3 = db_query($query) or die("auto_increment($table) Error :".mysqli_error());
       
       $result1 = db_fetch_array($result1);
       $result2 = db_fetch_array($result2);
@@ -428,11 +435,11 @@ function db_copy_table ($from,$to,$cant = NULL) {
 
       case 'pg':  
       $query="VACUUM FULL VERBOSE ANALYZE $table;";
-      $result1 = db_query($query) or die("vacuum($table) Error :".mysql_error());
+      $result1 = db_query($query) or die("vacuum($table) Error :".mysqli_error());
                         if (is_resource($result1)) $result1 = "OK";
 
                         $query="REINDEX TABLE $table;";
-                        $result2 = db_query($query) or die("reindex($table) Error :".mysql_error());
+                        $result2 = db_query($query) or die("reindex($table) Error :".mysqli_error());
                         if (is_resource($result2)) $result2 = "OK";
 
                         $result = $result1."/".$result2;
@@ -457,9 +464,9 @@ function db_ping ($db_conn)
   switch ($db_conn['type'])
   {
   case 'mysql':
-    if (!function_exists('mysql_ping'))
+    if (!function_exists('mysqli_ping'))
       die('db_ping(): mysql database selected but no mysql_ping().');
-    $result = mysql_ping ($db_conn['handle']);
+    $result = mysqli_ping ($db_conn['handle']);
     break;
 
   case 'pgsql':
