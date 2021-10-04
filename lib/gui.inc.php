@@ -204,12 +204,13 @@ function http_authenticate()
     (($image!="none")?image($image)."&nbsp;":"")
     .$text."\n"
     ,$url, $frame, "controlbutton", $onclick, $control_name);
-    
+
   return $result;
     }
 
 function javascript_refresh($url,$time)
 {
+  if(!isset($time) || trim($time) === '' ) $time = 1;
   $time_msec = $time*1000;
   if (($url) && ($time > 1)) 
     return script("refresh_timeout = window.setTimeout ('$url',$time_msec);");
@@ -425,6 +426,8 @@ function alarms_get_status ($alarms)
 
 function profile ($tag, $set_value = NULL)
 {
+  return true;
+  /* Don't care authentication 
   $Profiles = new JffnmsProfiles();
   $ProfilesValues = new JffnmsProfiles_values();
   
@@ -432,6 +435,7 @@ function profile ($tag, $set_value = NULL)
     $ProfilesValues->modify($_SESSION['auth_user_id'], $tag, $set_value);
   $value = $ProfilesValues->get_value($tag,$_SESSION['auth_user_id']);
   return $value;
+  */
 }
     
 function cookie ($tag, $set_value = NULL)

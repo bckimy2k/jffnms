@@ -187,7 +187,7 @@ if (($action=='list') && ($adm_view_type=='html'))
     
   // Get Filters Values
   $filter_fields = '';
-  while (list ($field, $data) = each ($st['fields']))
+  foreach ($st['fields'] as $field => $data)
     if ($data != NULL && array_key_exists('filter', $data)
       && $data['filter']!==false)
       $filter_fields[$field]=(isset($data['view'])?$data['view']:$field);

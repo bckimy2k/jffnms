@@ -208,6 +208,7 @@ function filters_generate_sql($filter_id = 1) {
       where filters_cond.filter_id = $filter_id and filters_cond.field_id = filters_fields.id
       order by filters_cond.pos";
     $result_filter_aux = db_query($query_filter_aux) or die ("Query failed - FS1 - ".db_error());
+    $sql = "";
     while ($registro_filter_aux = db_fetch_array($result_filter_aux)) {
   extract($registro_filter_aux);
   
@@ -219,6 +220,7 @@ function filters_generate_sql($filter_id = 1) {
   }
     }    
     $sql = trim($sql);
+    $sql_aux = "";
     if ($sql!="") $sql_aux ="($sql)";
     return $sql_aux;
 }

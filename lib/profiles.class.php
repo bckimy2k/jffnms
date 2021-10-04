@@ -34,7 +34,7 @@ class JffnmsProfiles extends basic
         array('profiles.id','desc')
     )); 
   }
-  function add($user_id, $option) {
+  function add_user($user_id, $option) {
       $id = '';
       $ProfilesValues = new JffnmsProfiles_values();
       $ProfilesOptions = new JffnmsProfiles_options();

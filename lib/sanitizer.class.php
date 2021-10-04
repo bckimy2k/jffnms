@@ -88,7 +88,7 @@ class Sanitizer
           FILTER_FLAG_STRIP_LOW|FILTER_FLAG_STRIP_HIGH);
         array_push($get_vars, "$fkey=$fvalue");
       }
-    return $base_url.(count($get_vars>0)?'?'.join('&',$get_vars):'');
+    return $base_url.(count($get_vars)>0)?'?'.join('&',$get_vars):'';
   }
 };
 ?>

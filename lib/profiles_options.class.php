@@ -16,7 +16,7 @@ class JffnmsProfiles_options extends basic
       array(array('profiles_options.id','desc')) ); //order 
   } // get_options()
 
-  function add($user_id, $option)
+  function add_user($user_id, $option)
   {
     $id = '';
     if (!is_numeric($option))

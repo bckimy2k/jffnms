@@ -66,7 +66,7 @@
     
       if (count($order_array) > 0) $order_text  = "order by ".join (", ",$order_array);
 
-  if (count($groups) > 0) $group_text = "group by ".join(", ",$groups);
+  if (is_countable($groups) && count($groups) > 0) $group_text = "group by ".join(", ",$groups);
 
   if (!$limit_init) $limit_init = 0;
   if ($limit_span > 0) $limit_text = " LIMIT $limit_init,$limit_span";
@@ -150,7 +150,7 @@ function db_open()
   switch ($db_type)
   {
   case 'mysql':
-    echo 'hostname=' . $dbhost . ',dbuser=' . $dbuser . ',dbpass=' . $dbpass;
+    //echo '<p>hostname=' . $dbhost . ',dbuser=' . $dbuser . ',dbpass=' . $dbpass . "</p>";
     // $dsn = "mysql:host=$dbhost;dbname=$db;charset=UTF8";
     //echo 'hello' . 'hostname=' . $dbhost . 'dbuser=' . $dbuser . ',dbpass=' . $dbpass;
     if (($dbconn = @mysqli_connect ($dbhost, $dbuser, $dbpass, $db))===FALSE)
@@ -249,7 +249,7 @@ function db_close ($db_conn = NULL) {
 
     //Do the Real DB Query, but without reconnection logic
     function db_query_simple ($db_conn,$query) {
-  debug($db_conn);
+  // debug($db_conn); //QUERY connection test for every query
   switch ($db_conn["type"]) {
       case "mysql":  
       $result = @mysqli_query ($db_conn["handle"],$query);

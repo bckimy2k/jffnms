@@ -73,7 +73,7 @@ echo
   td(control_button('Logout','_top',$Config->get('jffnms_rel_path').'/?logout=1&amp;OldAuth='.$_SESSION['auth_user_name'],'logoff.png'),'logout').
   tag_close("tr").
   table_close().
-  (($view_mode)?script ("parent.work.location.href = '".$view_modes_list[$view_mode]["url"]."'"):"");
+  (($view_mode)?script ("parent.work.location.href = '".$view_modes_list[$view_mode_name]["url"]."'"):"");
 
     adm_footer();
 ?>

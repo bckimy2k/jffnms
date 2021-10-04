@@ -37,7 +37,7 @@ include ('../../auth.php');
       if (!$ProfilesOptions->get_user($userid,$new_option_id)) {
           if ($old_option_id == 1) {
               $ProfilesOptions->del($userid,$old_option_id); //delete old one
-              $Profiles->add($userid,$new_option_id); //add it
+              $Profiles->add_user($userid,$new_option_id); //add it
           }
       } else  //the option already exists, modify it
           $ProfilesValues->modify($userid,$new_option_id,$new_value);
@@ -48,7 +48,7 @@ include ('../../auth.php');
   {
     if (!$filter) $filter =1; 
 
-    $editid = $Profiles->add($filter,1);
+    $editid = $Profiles->add_user($filter,1);
     $action = 'edit';
   }
 

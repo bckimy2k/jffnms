@@ -39,7 +39,7 @@ case 'update':
   break;
 
 case 'add':
-  $actionid=$ProfilesOptions->add();
+  $actionid=$ProfilesOptions->add_user();
   $action='edit';
   $editid = $actionid;
   break;

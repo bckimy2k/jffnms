@@ -18,7 +18,7 @@ class JffnmsUsers extends basic
     $result = db_query($query) or die ('Query Filed - user_add() - profile - '.db_error()); 
   
     while ($row = db_fetch_array($result)) //add every default option to the user profile
-      $ProfilesOptions->add($user_id,$row['id']);
+      $ProfilesOptions->add_user($user_id,$row['id']);
     return $user_id;
   } // add()
   

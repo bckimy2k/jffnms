@@ -6,7 +6,7 @@
 
 class JffnmsZones extends basic
 {
-  public function get_all($ids = NULL)
+  public function get_all($ids = NULL, $fields=[])
   {
     return get_db_list(
       array('zones'),
