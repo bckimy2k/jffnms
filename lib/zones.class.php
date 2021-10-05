@@ -21,7 +21,7 @@ class JffnmsZones extends basic
     return db_insert('zones',array('zone'=>'a New Zone','image'=>'unknown.png'));
   } // add()
 
-  function update($id,$data)
+  function update($id,$data,$value=NULL)
   {
     return db_update('zones',$id,$data);
   } //update()

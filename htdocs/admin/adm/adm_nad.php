@@ -71,7 +71,7 @@ function nad_view_host($host_id, $host, &$ips, &$ints)
 
   reset($ints);
   $found_ips = array();
-  while (list ($id, $data) = each ($ints))
+  foreach($ints as $id => $data)
     if (in_array($data['address'], $host_ips))
       $found_ips[$data['address']]=array('interface'=>$id, 'host'=>$data['host']);  
 

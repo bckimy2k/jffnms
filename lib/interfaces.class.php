@@ -342,7 +342,7 @@ class JffnmsInterfaces extends basic
           $result = array_rekey($result, "id");
         //Get Interface Fields Values
         $ids = array();
-        while (list ($id, $aux) = each ($result)) //get the ID of each returned interface
+        foreach($result as $id => $aux) //get the ID of each returned interface
           if ($aux['id'] > 1)
             $ids[$aux['id']][]=$id;
 
@@ -368,7 +368,7 @@ class JffnmsInterfaces extends basic
     return $this->get_all($ids, $filters, 1);
   }
 
-  function update($id,$interface_data)
+  function update($id,$interface_data,$value=NULL)
   {
     global $Config;
 

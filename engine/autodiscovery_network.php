@@ -538,7 +538,7 @@
 	$nets = nad_load_networks();
     $done_networks = 0;
 
-	while (list($network, $net_data) = each ($nets)) {
+	foreach($nets as $network => $net_data) {
 
 	    if (($net_data["admin_status"]==1) &&					// admin up 
 		($net_data["deep"] <= $net_data["max_deep"]))	{			// deep is less than max deep

@@ -96,7 +96,7 @@ class basic {
     return db_insert($this->jffnms_class(), $this->jffnms_insert);
   }
 
-  function update($id,$data)
+  function update($id,$data, $value=NULL)
   {
     return db_update($this->jffnms_class(), $id,$data);
   }

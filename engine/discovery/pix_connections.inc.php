@@ -21,7 +21,7 @@
 
         	$cnx_descr = snmp_walk ($ip, $community, $cfwConnectionStatDescription, INCLUDE_OID_2);
             
-		while (list ($key) = each ($cnx_values))
+		foreach($cnx_values as $key)
 		    $cnx_stats[$key] = array (
 			"interface" => "FW Stat ".$key,
 		        "description" => $cnx_descr[$key],

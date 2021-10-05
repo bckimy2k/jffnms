@@ -90,7 +90,7 @@ class JffnmsHosts extends basic
     return db_insert('hosts', array('name'=>'New Host', 'zone'=>$zone_id, 'creation_date'=>time()));
   }
   
-  function update($host_id,$host_data)
+  function update($host_id,$host_data,$value=NULL)
   {
     $host_data['rocommunity'] = snmp_options_parse($host_data['rocommunity']);
     $host_data['rwcommunity'] = snmp_options_parse($host_data['rwcommunity']);

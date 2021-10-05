@@ -52,7 +52,7 @@ class JffnmsMaps extends basic
     return db_insert('maps',array('name'=>'New Map '.rand(1,999),'parent'=>1));
   }
   
-  function update($map_id,$data)
+  function update($map_id,$data,$value=NULL)
   {
     return db_update('maps',$map_id,$data);
   }

@@ -8,7 +8,7 @@ class JffnmsActions extends basic
 {
   private $jffnms_insert = array('description' => 'New Action', 'command' => 'none');
 
-  public function get_all($ids = NULL)
+  public function get_all($ids = NULL, $fields=[])
   {
     return get_db_list('actions', $ids, array('actions.*'),
       array(array('actions.id','>',0)), //where
