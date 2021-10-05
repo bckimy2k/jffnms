@@ -195,7 +195,7 @@ if (($action=='list') && ($adm_view_type=='html'))
   $field_values = $api->field_values($filter_fields);
 
   // Render Filters HTML
-  while (list($field, $values) = each ($field_values))
+  foreach($field_values as $field => $values)
     if (count($values) > 2)
       switch ($st['fields'][$field]['type'])
       {
@@ -550,7 +550,7 @@ if (($adm_view_type=='ascii') && (is_array($ascii)))
   echo header('Content-Type: text/plain');
   $ascii_table = array(0=>'', 1=>'');
   
-  while (list($field, $name) = each ($ascii['fields']))
+  foreach($ascii['fields'] as $field => $name)
   {
     $max_size[$field] = 0;
     if (is_array($ascii['data'][$field]))

@@ -62,8 +62,8 @@ class basic {
     $values = array();
     $all_records = $this->get_all();
       
-    while (list(,$row) = each ($all_records)) 
-      while (list($field, $value) = each ($row))
+    foreach($all_records as $row)
+      foreach($row as $field => $value)
         if ($fields===NULL)
           $values[$field][]=$value;
         else 
@@ -71,7 +71,7 @@ class basic {
             $values[$field][$value]=$row[$fields[$field]];
     unset ($values['id']);
       
-    while (list ($field, $value) = each ($values))
+    foreach($values as $field => $value)
     {
       $values[$field] = array_unique($value);
       asort ($values[$field]);

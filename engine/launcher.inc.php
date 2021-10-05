@@ -277,7 +277,7 @@ if ($launcher_mode=='master')
     
       reset($remaining_items);
       
-      while (list($item) = each ($remaining_items))
+      foreach($remaining_items as $item)
       if (!isset($pending_items[$item]) &&          // it was not in the pending list
           ($remaining_items[$item] < $max_tries)) {        // tries not excedded
           

@@ -17,7 +17,7 @@
 		$netToMedia = snmp_walk($ip,$rocommunity,$netToMedia_oid,1); 
 		$bgpRemote =  snmp_walk($ip,$rocommunity,$bgpRemote_oid,1);
 		
-		while (list ($oid,) = each ($mac)) {
+		foreach(array_keys($mac) as $oid) {
 
 		    unset ($ip_aux);
 		    unset($ip_addr);

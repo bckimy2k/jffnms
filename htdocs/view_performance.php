@@ -35,8 +35,10 @@ $Interfaces = new JffnmsInterfaces();
 //get graphics array with all needed data
 list ($graphics, $graph_types_show, $graph_defaults, $number_of_interfaces) = 
   performance_graphs_list ($Interfaces, $graph_type,
-    reports_make_interface_filter($use_interfaces,$view_all), $use_interfaces,
-    $graph_times['start_unix'], $graph_times['stop_unix']);
+    reports_make_interface_filter($use_interfaces,$view_all),
+    $graph_times['start_unix'], $graph_times['stop_unix'],
+    $use_interfaces
+    );
 
 performance_graphs_header($view_type, $graphics, $graph_times, $graph_types_show, $graph_defaults, $number_of_interfaces, $graph_type);
     
@@ -196,7 +198,7 @@ function performance_graphs_html_header (&$graph_times, $graph_type, $graph_type
   return $output;
 } //function
 
-function performance_graphs_list (&$Interfaces, $graph_type, $filters, $use_interfaces = NULL, $start, $stop)
+function performance_graphs_list (&$Interfaces, $graph_type, $filters, $start, $stop,$use_interfaces = NULL) 
 {  
   $graphics = array();
   $graph_types_show = array();
@@ -282,7 +284,7 @@ function performance_graphs_list (&$Interfaces, $graph_type, $filters, $use_inte
   //debug ($graph_types_show);
   //debug ($graph_defaults);
     
-  return array($graphics,$graph_types_show,$graph_defaults, count($interface_ids));
+  return array($graphics,$graph_types_show,$graph_defaults, isset($interface_ids) && is_countable($interface_ids) ?  count($interface_ids) : 0);
 } //performance_graphs_list function
 
 function performance_graphs_header($view_type, &$graphics, &$graph_times, $graph_types_show, $graph_defaults, $number_of_interfaces, $graph_type)

@@ -138,7 +138,7 @@ function time_msec_diff($from, $to=FALSE)
   else
       $v = get_object_vars ( $object ); // retrieve all object properties and values
   
-  while ( list ( $prop, $value ) = each ( $v ) )  // create key=>value pairs for all $prop=>value pairs
+  foreach($v as $prop => $value) // create key=>value pairs for all $prop=>value pairs
           $ret [ $prop ] = object2array ( $value );
   
   return $ret;
@@ -406,7 +406,7 @@ function convert_sql_sort ($fields, $sorts)
     
   reset($array);
   
-  while (list($old_key,$data) = each ($array)) {
+  foreach($array as $old_key => $data) {
       $new_key = $data[$key];
       $new[$new_key]=$data;
 
@@ -455,7 +455,7 @@ function array_record_search ($rows, $needle_field, $needle_value)
   
     if (is_array($rows)) {
         reset($rows);
-        while (list ($id, $row) = each ($rows))
+        foreach($rows as $id => $row)
             if ($row[$needle_field] == $needle_value)
                 $result[$id]=$row;
     }

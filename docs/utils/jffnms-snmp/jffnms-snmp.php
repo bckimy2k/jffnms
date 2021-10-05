@@ -31,7 +31,8 @@ function truncate_counter (&$value) {
 function create_rama ($oid,$k,$data,$deep,&$tree) {
     if (!is_numeric(current(array_keys($data)))) $data = array_values ($data);
 
-    while (list ($k1,$item) = each ($data)) {
+	foreach($data as $k1 => $item)
+	{
 	if (is_array($item)) create_rama ("$oid.$k",$k1,$item,++$deep,$tree);
 	else 
 	    if ($deep==0)
@@ -76,7 +77,7 @@ function walk_tree ($start, &$tree) {
     $show_next = 0;
 
     reset ($tree);
-    while (list ($k,$v) = each ($tree)) {
+	foreach($tree as $k => $v) {
 
 	if (($show_next == 1) || ((strpos($k, $start)===0) && ($k!==$start)))
 	    return secho ($k,$v);

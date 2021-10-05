@@ -13,7 +13,7 @@
 
 	if (is_array($output)) {
 	    next ($output);
-	    while (list(,$line) = each($output)) 
+		foreach($ouput as $line)
 		if ($line) {
 		    $data = explode(" ",$line);
 		    //var_dump($data);
@@ -31,7 +31,7 @@
 
 	if (is_array($output)) {
 	    next ($output);
-	    while (list($key,$line) = each($output)) {
+		foreach($output as $key => $line) {
 		$ok = true;
 		$line=trim($line);
 	
@@ -57,7 +57,7 @@
 
     function MIBParser_Process(&$data,&$idents,&$result,$part) {
 	
-	while (list($key,$line) = each ($data)) {
+	foreach($data as $key =>$line) {
 
 	    if ($line[strlen($line)-1]=="{") {
 		

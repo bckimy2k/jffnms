@@ -230,9 +230,9 @@ function host_interfaces($host_ip,$rocommunity,$hostid, $md_type = 0)
     if (is_array($bulk_add) && (count($bulk_add)>0))
     {
       $html = '';
-      while ( list($key,$data) = each ($bulk_add))
+      foreach($bulk_add as $key => $data)
       {
-        while ( list($field,$value) = each ($data)) 
+        foreach($data as $field => $value)
           $html.=hidden("bulk_add[".$key."][".$field."]",htmlspecialchars($value),0);
         $html.="\n";
       }

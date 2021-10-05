@@ -28,7 +28,7 @@
 	if (is_array($tcpConnEntry)) {
 	    reset($tcpConnEntry);
     
-	    while (list($key,$state) = each ($tcpConnEntry))
+		foreach($tcpConnEntry as $key => $state)
 		if (strpos($state,"5")!==FALSE) { //only established
 		    $entry = explode(".",$key);
 		    $entry = array_slice ($entry, count($entry)-10,10); //get only the last 10 items (SRC-IP(4) + srcport + DEST-IP(4) + destport)

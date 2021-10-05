@@ -67,7 +67,7 @@ function rrdtool($method,$file,$opts,$force_no_module = 0)
     $ret = false;
     
     if (count($ret1) > 1)
-      while (list ($key,$line) = each ($ret1)) 
+      foreach($ret1 as $key => $line)
         if (!empty($line))
         {
           $line1 = explode(' ',$line);
@@ -433,7 +433,7 @@ function get_rrd_rtt_pl ($id,$from,$to,$threshold,$bwin_db,$bwout_db,$flipinout)
             unset($values['packetloss'][$i]);
         }
         if (count($result) > 0) {
-            while (list ($key,$value) = each ($result)) {
+            foreach($result as $key => $value) {
                 $rtt_final += $value["rtt"];
                 $pl_final += $value["pl"];
                 unset ($result[$key]);

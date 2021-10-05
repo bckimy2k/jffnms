@@ -347,7 +347,7 @@ class JffnmsInterfaces extends basic
             $ids[$aux['id']][]=$id;
 
         $data = $this->values(array_keys($ids),array('exclude_types'=>array(20)));
-        while (list ($id, $aux) = each ($data['values']))
+        foreach($data['values'] as $id => $aux)
           foreach ($ids[$id] as $id_real)
         $result[$id_real]=array_merge($result[$id_real],$aux);
         reset ($result);

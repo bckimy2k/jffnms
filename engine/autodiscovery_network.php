@@ -190,7 +190,9 @@
 	
 	$result = false;
 
-	while ((list (, $comm) = each ($communities)) && (!$snmp_name))
+	// while ((list (, $comm) = each ($communities)) && (!$snmp_name))
+	foreach($communities as $comm) {
+	    if ($snmp_name) break;
 	    
 	    if (($snmp_name = snmp_get($host_ip, $comm, $system_name_oid, 1))!==false) {
 		
@@ -316,6 +318,7 @@
 		nad_update_host ($host_id, array("description"=>$snmp_description, "snmp_name"=>$snmp_name,
 			"snmp_community"=>$comm, "forwarding"=>$host_forwarding));
 	    }
+	}
 
 	return $result;
     }

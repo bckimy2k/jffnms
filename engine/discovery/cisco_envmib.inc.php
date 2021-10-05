@@ -19,7 +19,7 @@
             $envmon_status = snmp_walk($ip,$community,$oid_status,1);
 
             if (is_array($envmon_list) && (count($envmon_list)==count($envmon_status)))
-            while (list ($key, $entry) 		= each ($envmon_list)) { 
+			foreach($envmon_list as $key => $entry) {
 		list ($key_aux ,$entry_status)  = each ($envmon_status); //keep tracking the status entries 
 	
 		$key_array = explode (".",$key);

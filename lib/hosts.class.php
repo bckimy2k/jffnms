@@ -65,6 +65,9 @@ class JffnmsHosts extends basic
   
   private function list_filtered (&$Interfaces, $filters = array())
   {
+    if (!isset($Interfaces)) {
+      $Interfaces = new JffnmsInterfaces();
+    }
     $interfaces = $Interfaces->get_all(NULL,$filters);
     
     $hosts = array();

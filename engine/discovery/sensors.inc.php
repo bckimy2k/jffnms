@@ -25,7 +25,7 @@
 		$names  = snmp_walk ($ip, $community, $hrSensorName,  INCLUDE_OID_1);
 		$values = snmp_walk ($ip, $community, $hrSensorValue, INCLUDE_OID_1);
 
-		while (list ($key,$mapping) = each ($mappings))
+		foreach($mappings as $key => $mapping)
 		    if (($mapping=="-1") && 	// Its a parent sensor
 			isset($values[$key]))	// it has a value
 

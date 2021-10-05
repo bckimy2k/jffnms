@@ -18,7 +18,7 @@ function iad_interfaces_from_db (&$Interfaces, $host_id,$type_id)
   if (count($aux) > 0)
   {
     if (is_array($aux['field_types'][$type_id]))
-      while (list($field,$fdata) = each ($aux["field_types"][$type_id]))
+      foreach($aux["field_types"][$type_id] as $field => $fdata)
         if ($fdata['type']==3)
         {
           $index=$field;
@@ -31,7 +31,7 @@ function iad_interfaces_from_db (&$Interfaces, $host_id,$type_id)
     unset ($aux['field_types']);
     reset ($aux);
       
-    while (list(,$data) = each ($aux))
+    foreach($aux as $data)
       $db_interfaces[$data[$index]]=$data;
 
   }

@@ -312,7 +312,7 @@ function snmp_hex_to_string ($hex)
         $user_agent = "JFFNMS";
 
         $urlencoded = "";
-        while (list($key,$value) = each($vars))
+        foreach($vars as $key =>  $value)
             if (!is_array($value))
                 $urlencoded.= "$key=$value&";
             else
