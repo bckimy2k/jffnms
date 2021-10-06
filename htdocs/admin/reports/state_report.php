@@ -215,7 +215,8 @@ if ($view_mode=='html')
 
     } //for each interface
 
-    if (is_array($avail["summary"])) {
+    if (array_key_exists("summary", $avail)) {
+   // if ( is_array($avail["summary"])) {
   if ($view_mode=="html")
       echo
     tr_open("summary").

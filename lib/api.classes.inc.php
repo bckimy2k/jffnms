@@ -234,6 +234,25 @@ class JffnmsTrap_receivers  extends basic
   }
 }
 
+class JffnmsTraps  extends basic
+{ 
+  public $jffnms_insert = array('description'=>'a New Trap Receiver', 'trap_oid'=>'Trap OID', 'position'=>'10');
+  public $jffnms_filter_record = 0;
+
+  function get_all($ids = NULL, $fields=NULL)  { 
+    return get_db_list(  
+      array('traps'),  $ids, 
+      array('traps.*'),
+      NULL,
+      array(
+        array('traps.ip','asc'),
+        array('traps.trap_oid','asc'),
+        array('traps.date','asc')
+      )
+    ); 
+  }
+}
+
 class JffnmsPollers_groups extends basic
 { 
   public $jffnms_insert = array('description'=>'New Poller Group'); 

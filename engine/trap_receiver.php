@@ -32,10 +32,12 @@ function receive_trap()
 
 
   $uptime = trim(fgets(STDIN,4096)) or die('Could not get uptime');
+  $uptimeArray = preg_split("/[\s,]+/", $uptime);
+  $trapoid = $uptimeArray[1];
 
-  $trapoid = fgets(STDIN,4096) or die("Could not get trapoid");
-  $trapoid = preg_replace('/^\S+\s+(\S+)\s*$/', '$1', $trapoid);
-
+  $varbindSet = fgets(STDIN,4096) or die("Could not get varbind");
+  //$trapoid = preg_replace('/^\S+\s+(\S+)\s*$/', '$1', $trapoid);
+  $array = preg_split('/["]+/', $varbindSet);
 
   if (trap_duplicate($trapoid))
   {
@@ -46,6 +48,11 @@ function receive_trap()
   $varbind_text = '';
   $linenum=0;
 
+  if(count($array) > 0)
+  {
+    $varbinds[$array[0]] = $array[1];
+  }
+ /*
   while($line=trim(fgets(STDIN,4096)))
   {
     $linenum++;
@@ -56,7 +63,7 @@ function receive_trap()
     } else
       $varbind_text .= "     L$linenum: (no match) $line\n";
   }
-  
+ */ 
   // Insert into database:
   $trap_id = db_insert ('traps',array('date'=>time(), 'ip'=>$ipaddr, 'trap_oid'=>$trapoid));
   $oidid = 1;

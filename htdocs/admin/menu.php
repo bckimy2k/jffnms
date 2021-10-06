@@ -78,11 +78,12 @@ function get_admin_menus()
     'nad'          =>array('title'=>'Network Discovery',  'type'=>'admframe',        'image'=>'world'),
 
     'events' => array('title'=>'Event Analyzer', 'image'=>'event',
-    'items'  =>array('severity','event_types','syslog_types','trap_receivers','receiver_backends','alarm_states', 'logfiles','logfiles_match_items')),
+    'items'  =>array('severity','event_types','syslog_types','trap_receivers','traps','alarm_states', 'logfiles','logfiles_match_items')),
     'severity'    =>array('title'=>'Severities',    'type'=>'standard',         'image'=>''  ),
     'event_types'    =>array('title'=>'Event Types',    'type'=>'standard',        'image'=>'event'),
     'syslog_types'    =>array('title'=>'Syslog Message Rules','type'=>'standard',        'image'=>''  ),
     'trap_receivers'  =>array('title'=>'SNMP Trap Receivers',    'type'=>'standard',      'image'=>''  ),
+    'traps'  =>array('title'=>'SNMP Trap Receivers2',    'type'=>'standard',      'image'=>''  ),
     'alarm_states'    =>array('title'=>'Alarm States & Sounds','type'=>'standard',        'image'=>'alert'),
     'logfiles'          =>array('title'=>'Log Files','type'=>'standard', 'image'=>''),
     'logfiles_match_items' =>array('title'=>'Log Files Match Items','type'=>'standard', 'image'=>''),

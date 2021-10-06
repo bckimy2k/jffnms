@@ -385,7 +385,23 @@ function get_structure($struct_name)
           NULL)
       );
     break;
-
+ case 'traps':
+      return array(
+        'title'=>'SNMP Trap Receivers2',
+        'object'=>'traps',
+        'show_id'=>1,
+        'action_type'=>1,
+        'hide_record_one'=>0,
+        'profile'=>'ADMIN_SYSTEM',
+        
+        'fields'=>array(
+            'ip'=>array(    'name'=>'ip',  'type'=>'textbox', 'size'=>20),
+            'trap_oid'=>array(  'name'=>'trap oid',  'type'=>'textbox','size'=>250),
+            'analized'=>array(  'name'=>'analized',  'type'=>'checkbox'),
+            'date'=>array(    'name'=>'date',  'type'=>'textbox','size'=>10),
+            NULL)
+        );
+      break;
   case 'pollers_backend':
     return array(
       'title'=>'Pollers Backends',
