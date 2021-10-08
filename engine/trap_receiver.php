@@ -66,6 +66,27 @@ function receive_trap()
  */ 
   // Insert into database:
   $trap_id = db_insert ('traps',array('date'=>time(), 'ip'=>$ipaddr, 'trap_oid'=>$trapoid));
+  
+  $query = "SELECT id FROM trap_receivers WHERE match_oid = '$trapoid' ";
+  $result = db_query ($query) or die ('Query Failed - trap_receivers table - '.db_error());
+  if (db_num_rows($result) == 0)
+  { 
+   // if missing  match_oid, create an entry in trap_receivers
+
+   $trap_receiver = db_insert("trap_receivers", array(
+        'id' => 1,
+        'position' => 10,
+        'match_oid' => $trapoid,
+        'description' => 'WRG Stage change',
+        'command' => 'static',
+        'parameters' => 'WRG failover state',
+        'backend' => 77,
+        'interface_type' => 4,
+        'stop_if_matches' => 1
+   ));
+  }
+  
+  //db_simple_query()
   $oidid = 1;
   foreach ($varbinds as $varbind_oid =>$varbind_value)
     db_insert('traps_varbinds', array(

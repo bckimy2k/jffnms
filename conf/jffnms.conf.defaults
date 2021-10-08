@@ -34,7 +34,7 @@ system:type = menu
 
 os_type:description = Operating System
 os_type:type = enum
-os_type:default = unix
+os_type:default = windows
 os_type:values = Unix-like:unix;Windows:windows
 
 jffnms_access_method:description = GUI Access Method 

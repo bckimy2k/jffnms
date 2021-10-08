@@ -41,7 +41,7 @@ class JffnmsMaps_interfaces extends basic
     return $result;
   }
   
-  function update($id,$data)
+  function update($id,$data,$value = NULL)
   {
     return db_update('maps_interfaces',$id,$data);
   }

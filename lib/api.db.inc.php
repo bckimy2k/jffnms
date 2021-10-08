@@ -104,12 +104,13 @@ function db_insert ($table,$values)
   }
   
   $query = "insert into $table ($fields_text) VALUES ($values_text)";
-  $result = db_query($query);
+  $dbConn = db_get_handle(); 
+  $result = db_query($query, $dbConn);
 
   if (!$result) 
     logger ("Query Failed - table_insert($table) - $query - ".db_error());  
   else 
-    $id = db_insert_id();
+    $id = db_insert_id($dbConn);
   return $id;
 }
 
@@ -124,7 +125,7 @@ function db_update( $table, $id, $table_data)
   foreach ($table_data as $field => $value) 
     $update_fields[] = "$field = '$value'";
   
-  $query = "UPDATE $table SET ".join($update_fields, ',')."WHERE $table.id = '$id'";
+  $query = "UPDATE $table SET ".join(',', $update_fields)."WHERE $table.id = '$id'";
   $result = db_query ($query) or die ("Query failed - db_update($table) - $query - ".db_error());
   $result = (is_resource($result))?true:$result;
   return $result;
@@ -253,7 +254,10 @@ function db_close ($db_conn = NULL) {
   switch ($db_conn["type"]) {
       case "mysql":  
       $result = @mysqli_query ($db_conn["handle"],$query);
-      
+      /*if (str_contains($query, "insert")) { // successful insert, get the ID
+        $result = mysqli_insert_id($db_conn['handle']);      
+      }
+      */
       break;
   
       case "pg":  //postgres exeptions
@@ -282,8 +286,8 @@ function db_close ($db_conn = NULL) {
 
 
     //Calls the real DB Query, but includes a reconnection logic
-    function db_query ($query) {
-  $db_conn = db_get_handle();
+    function db_query ($query, $db_conn = NULL) {
+  if ($db_conn == NULL)  {$db_conn = db_get_handle(); }
   $try = 0;
   $max_tries = 5;
   

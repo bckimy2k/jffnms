@@ -126,7 +126,7 @@ class JffnmsAlarms extends basic
     return NULL;
   }//lookup
 
-  public function update($id,$data)
+  public function update($id,$data,$value=NULL)
   {
     $Triggers = new JffnmsTriggers();
     $result = FALSE;
