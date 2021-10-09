@@ -33,7 +33,18 @@ function receive_trap()
 
   $uptime = trim(fgets(STDIN,4096)) or die('Could not get uptime');
   $uptimeArray = preg_split("/[\s,]+/", $uptime);
-  $trapoid = $uptimeArray[1];
+  if ($uptimeArray[0] == "DISMAN-EVENT-MIB::sysUpTimeInstance") // v1
+  {
+    $raw_trapoid = fgets(STDIN,4096) or die("could not get trapoid"); 
+    $trapoids = preg_split("/[\s]+/",$raw_trapoid);
+    $trapoid = $trapoids[1];
+    $version = "v1";
+  }
+  else // v2c or v3 trap
+  {
+    $trapoid = $uptimeArray[1];
+    $version = "v2c or v3";
+  }
 
   $varbindSet = fgets(STDIN,4096) or die("Could not get varbind");
   //$trapoid = preg_replace('/^\S+\s+(\S+)\s*$/', '$1', $trapoid);
@@ -77,7 +88,7 @@ function receive_trap()
         'id' => 1,
         'position' => 10,
         'match_oid' => $trapoid,
-        'description' => 'WRG Stage change',
+        'description' => $version, 
         'command' => 'static',
         'parameters' => 'WRG failover state',
         'backend' => 77,
